@@ -11,10 +11,20 @@ public class RubyLabel {
 
     // This is to support existing deployments where the registered runtimes lack a runtime manager prefix.
     static final String DEFAULT_RUNTIME_MANAGER = "RVM";
-    private static final String RUBY_CAPABILITY_PREFIX = CapabilityDefaultsHelper.CAPABILITY_BUILDER_PREFIX + ".ruby";
 
     private String rubyRuntimeManager;
     private String rubyRuntime;
+
+    public enum CapabilityType {
+        RUBY(CapabilityDefaultsHelper.CAPABILITY_BUILDER_PREFIX + ".ruby"),
+        COMMAND(CapabilityDefaultsHelper.CAPABILITY_BUILDER_PREFIX + ".command");
+
+        private String value;
+        private CapabilityType(String value) {
+
+            this.value = value;
+        }
+    }
 
     public RubyLabel(String rubyRuntimeManager, String rubyRuntime) {
 
@@ -54,9 +64,9 @@ public class RubyLabel {
         }
     }
 
-    public String toCapabilityKey() {
+    public String toCapabilityKey( CapabilityType type ) {
 
-        return String.format( "%s.%s", RUBY_CAPABILITY_PREFIX, this );
+        return String.format( "%s.%s", type.value, this );
     }
 
     @Override

@@ -158,9 +158,15 @@ public abstract class AbstractRubyTask implements CommonTaskType {
 
     protected String getRubyExecutablePath( final RubyLabel rubyRuntimeLabel ) {
 
-        final Capability capability = getCapabilityContext().getCapabilitySet().getCapability( rubyRuntimeLabel.toCapabilityKey() );
-        Preconditions.checkNotNull( capability, "Capability  for ruby " + rubyRuntimeLabel.toCapabilityKey()
-                + ".  Please be sure to \"Detect server capabilities\" in the Administration console, and the path is valid." );
+        String capabilityKey = rubyRuntimeLabel.toCapabilityKey(RubyLabel.CapabilityType.RUBY);
+        Capability capability = this.getCapabilityContext().getCapabilitySet().getCapability( capabilityKey );
+
+        if (null == capability) {
+            capabilityKey = rubyRuntimeLabel.toCapabilityKey(RubyLabel.CapabilityType.COMMAND);
+            capability = this.getCapabilityContext().getCapabilitySet().getCapability( capabilityKey );
+        }
+
+        Preconditions.checkNotNull( capability, "Capability : " + capabilityKey );
         final String rubyRuntimeExecutable = capability.getValue();
         Preconditions.checkNotNull( rubyRuntimeExecutable, "rubyRuntimeExecutable" );
         return rubyRuntimeExecutable;

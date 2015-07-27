@@ -45,8 +45,7 @@ public abstract class AbstractRubyTest {
     public void setUp() throws Exception {
 
         when( getCapability().getValue() ).thenReturn( getRubyRuntime().getRubyExecutablePath() );
-        when( getCapabilitySet().getCapability( getRubyLabel().toCapabilityKey() ) ).thenReturn( getCapability() );
-        //        when( this.capabilityContext.getCapabilitySet() ).thenReturn( this.capabilitySet );
+        when( getCapabilitySet().getCapability( getRubyLabel().toCapabilityKey(RubyLabel.CapabilityType.RUBY) ) ).thenReturn( getCapability() );
 
         // setup xvfb-run
         when( getXvfbRunCapability().getValue() ).thenReturn( "/usr/bin/xvfb-run" );
