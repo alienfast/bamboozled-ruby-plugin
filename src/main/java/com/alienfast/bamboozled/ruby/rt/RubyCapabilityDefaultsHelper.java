@@ -93,11 +93,15 @@ public class RubyCapabilityDefaultsHelper implements CapabilityDefaultsHelper {
                     final RubyLabel rubyLabel = new RubyLabel(
                             rubyRuntimeLocatorService.getRuntimeManagerName(),
                             rubyRuntime.getRubyRuntimeName() );
-                    final String capabilityKey = rubyLabel.toCapabilityKey();
-                    log.info( "Adding " + capabilityKey );
-                    final Capability capability = new CapabilityImpl( capabilityKey, rubyRuntime.getRubyExecutablePath() );
-                    log.info( "Added {}", capability );
-                    capabilitySet.addCapability( capability );
+
+                    // Add capabilities for either 'command' or 'ruby' in order to support remote agents.
+                    for (RubyLabel.CapabilityType capabilityType : RubyLabel.CapabilityType.values()) {
+                        String capabilityKey = rubyLabel.toCapabilityKey(capabilityType);
+                        log.info( "Adding " + capabilityKey );
+                        final Capability capability = new CapabilityImpl( capabilityKey, rubyRuntime.getRubyExecutablePath() );
+                        log.info( "Added {}", capability );
+                        capabilitySet.addCapability( capability );
+                    }
                 }
             }
         }

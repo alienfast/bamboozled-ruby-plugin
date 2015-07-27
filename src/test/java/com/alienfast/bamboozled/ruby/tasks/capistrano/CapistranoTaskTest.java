@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.alienfast.bamboozled.ruby.fixtures.RvmFixtures;
+import com.alienfast.bamboozled.ruby.rt.RubyLabel;
 import com.alienfast.bamboozled.ruby.rt.RuntimeLocatorException;
 import com.alienfast.bamboozled.ruby.tasks.AbstractBundleExecCommandBuilder;
 import com.alienfast.bamboozled.ruby.tasks.AbstractTaskTest;
@@ -40,7 +41,7 @@ public class CapistranoTaskTest extends AbstractTaskTest {
         this.capistranoTask.setCapabilityContext( getCapabilityContext() );
 
         when( getCapability().getValue() ).thenReturn( getRubyRuntime().getRubyExecutablePath() );
-        when( getCapabilitySet().getCapability( getRubyLabel().toCapabilityKey() ) ).thenReturn( getCapability() );
+        when( getCapabilitySet().getCapability( getRubyLabel().toCapabilityKey(RubyLabel.CapabilityType.RUBY) ) ).thenReturn( getCapability() );
         when( getCapabilityContext().getCapabilitySet() ).thenReturn( getCapabilitySet() );
 
         setupBuildContext( this.capistranoTask );

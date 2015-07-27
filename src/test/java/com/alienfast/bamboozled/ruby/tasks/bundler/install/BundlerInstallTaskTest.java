@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.alienfast.bamboozled.ruby.fixtures.RvmFixtures;
+import com.alienfast.bamboozled.ruby.rt.RubyLabel;
 import com.alienfast.bamboozled.ruby.rt.RuntimeLocatorException;
 import com.alienfast.bamboozled.ruby.tasks.AbstractTaskTest;
 import com.google.common.collect.Maps;
@@ -37,7 +38,7 @@ public class BundlerInstallTaskTest extends AbstractTaskTest {
         this.bundlerInstallTask.setCapabilityContext( getCapabilityContext() );
 
         when( getCapability().getValue() ).thenReturn( getRubyRuntime().getRubyExecutablePath() );
-        when( getCapabilitySet().getCapability( getRubyLabel().toCapabilityKey() ) ).thenReturn( getCapability() );
+        when( getCapabilitySet().getCapability( getRubyLabel().toCapabilityKey(RubyLabel.CapabilityType.COMMAND) ) ).thenReturn( getCapability() );
         when( getCapabilityContext().getCapabilitySet() ).thenReturn( getCapabilitySet() );
 
         getConfigurationMap().put( "ruby", getRubyRuntime().getRubyRuntimeName() );
